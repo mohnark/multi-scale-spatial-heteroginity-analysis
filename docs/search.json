@@ -1,0 +1,65 @@
+[
+  {
+    "objectID": "index.html",
+    "href": "index.html",
+    "title": "MSHA",
+    "section": "",
+    "text": "MSHA - Multi-Scale-Spatial-Heterogenity-Analysis is a programming-focused geospatial project that quantifies how homogeneous, complex, and spatially structured a remote-sensing scene is, without requiring land-cover labels or training data.\nThe project builds an unsupervised scene rating framework for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI.\nThe core idea is simple:\n\ntake a remote-sensing tile\ndivide it into windows\ncompute local texture and spatial statistics\naggregate them into scene-level scores\nrank scenes by homogeneity, complexity, and spatial organization"
+  },
+  {
+    "objectID": "index.html#project-overview",
+    "href": "index.html#project-overview",
+    "title": "MSHA",
+    "section": "",
+    "text": "MSHA - Multi-Scale-Spatial-Heterogenity-Analysis is a programming-focused geospatial project that quantifies how homogeneous, complex, and spatially structured a remote-sensing scene is, without requiring land-cover labels or training data.\nThe project builds an unsupervised scene rating framework for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI.\nThe core idea is simple:\n\ntake a remote-sensing tile\ndivide it into windows\ncompute local texture and spatial statistics\naggregate them into scene-level scores\nrank scenes by homogeneity, complexity, and spatial organization"
+  },
+  {
+    "objectID": "index.html#question",
+    "href": "index.html#question",
+    "title": "MSHA",
+    "section": "2 Question",
+    "text": "2 Question\nCan remote-sensing scenes be automatically characterized and ranked using unsupervised multi-scale spatial metrics?"
+  },
+  {
+    "objectID": "index.html#study-data",
+    "href": "index.html#study-data",
+    "title": "MSHA",
+    "section": "3 Study data",
+    "text": "3 Study data\n\n3.1 Data source\nThe project uses Sentinel-2 Level-2A imagery.\n\n\n3.2 Bands\nOnly the following 10 m bands are required:\n\nB04: Red\nB08: NIR\n\nFrom these, NDVI is computed:\n\\[\nNDVI = \\frac{NIR - Red}{NIR + Red}\n\\]\n\n\n3.3 Scene selection\nA practical dataset consists of:\n\n4 to 6 scenes (Different Timestamps, Locations etc)\neach scene cropped to 512 × 512 pixels\nspatial resolution: 10 m\nanalysis performed on NDVI only\n\nNo land-type labels are required."
+  },
+  {
+    "objectID": "index.html#analytical-framework",
+    "href": "index.html#analytical-framework",
+    "title": "MSHA",
+    "section": "4 Analytical framework",
+    "text": "4 Analytical framework\nThe analysis is performed at two levels:\n\nWindow level: compute local metrics inside windows\nScene level: aggregate window metrics into scene descriptors\n\n\n4.1 Multi-scale windows\nThe same image is evaluated at multiple window sizes:\n\n32 × 32\n64 × 64\n128 × 128\n\nThis allows the project to measure how scene structure changes with spatial support."
+  },
+  {
+    "objectID": "index.html#core-metrics",
+    "href": "index.html#core-metrics",
+    "title": "MSHA",
+    "section": "5 Core metrics",
+    "text": "5 Core metrics\nThe project uses five main metrics.\n\n5.1 1. Shannon entropy\nMeasures information richness or disorder.\n\\[\nH = - \\sum_i p_i \\log(p_i)\n\\]\nInterpretation:\n\nlow entropy = uniform scene\nhigh entropy = complex or irregular scene\n\n\n\n5.2 2. Local variance\nMeasures variability inside each window.\n\\[\n\\sigma^2 = \\frac{1}{N}\\sum_i (x_i - \\mu)^2\n\\]\nInterpretation:\n\nlow variance = homogeneous patch\nhigh variance = heterogeneous patch\n\n\n\n5.3 3. Edge density\nComputed from Sobel or Canny edges.\n\\[\nED = \\frac{\\text{number of edge pixels}}{\\text{total number of pixels}}\n\\]\nInterpretation:\n\nlow edge density = smooth scene\nhigh edge density = many boundaries or fragmented structure\n\n\n\n5.4 4. GLCM homogeneity\nA texture smoothness metric derived from the gray-level co-occurrence matrix.\nInterpretation:\n\nhigh value = smooth texture\nlow value = rough or heterogeneous texture\n\n\n\n5.5 5. Moran’s I\nMeasures spatial autocorrelation.\n\\[\nI = \\frac{N}{W}\n\\frac{\\sum_i \\sum_j w_{ij}(x_i-\\bar{x})(x_j-\\bar{x})}\n{\\sum_i (x_i-\\bar{x})^2}\n\\]\nInterpretation:\n\nhigh positive values = clustered, spatially organized patterns\nvalues near zero = random arrangement"
+  },
+  {
+    "objectID": "index.html#composite-indices",
+    "href": "index.html#composite-indices",
+    "title": "MSHA",
+    "section": "6 Composite indices",
+    "text": "6 Composite indices\nThe raw metrics are standardized using z-scores:\n\\[\nz = \\frac{x - \\mu}{\\sigma}\n\\]\n\n6.1 Homogeneity Index (HI)\nA higher value indicates a more uniform scene.\n\\[\nHI = z(\\text{GLCM Homogeneity}) - z(\\text{Entropy}) - z(\\text{Variance}) - z(\\text{Edge Density})\n\\]\n\n\n6.2 Complexity Index (CI)\nA higher value indicates a more textured and fragmented scene.\n\\[\nCI = z(\\text{Entropy}) + z(\\text{Variance}) + z(\\text{Edge Density})\n\\]\n\n\n6.3 Spatial Structure Index (SSI)\nA higher value indicates stronger spatial organization.\n\\[\nSSI = z(\\text{Moran's I}) + z(\\text{GLCM Homogeneity})\n\\]\n\n\n6.4 Optional final score\nA single scene score can be defined as:\n\\[\nSIS = 0.4 \\cdot CI + 0.4 \\cdot SSI - 0.2 \\cdot HI\n\\]\nwhere SIS is the Scene Informativeness Score."
+  },
+  {
+    "objectID": "index.html#expected-outputs",
+    "href": "index.html#expected-outputs",
+    "title": "MSHA",
+    "section": "7 Expected outputs",
+    "text": "7 Expected outputs\n\n7.1 Output 1 — Scene ranking table\nA table like:\n\n\n\n\n\n\n\n\n\n\n\n\n\n\nScene\nMean Entropy\nMean Variance\nMean Edge Density\nMean Moran’s I\nHI\nCI\nSSI\nSIS\n\n\n\n\n\n\n\n7.2 Output 2 — Patch-level homogeneity maps\nMaps showing where homogeneous and heterogeneous regions occur within a scene.\n\n\n7.3 Output 3 — Complexity maps\nWindow-based maps of CI values.\n\n\n7.4 Output 4 — PCA plot of scenes\nDimensionality reduction on scene descriptors to compare scene similarity.\n\n\n7.5 Output 5 — Multi-scale comparison plot\nA figure showing how scene metrics change across 32, 64, and 128 pixel windows."
+  },
+  {
+    "objectID": "index.html#stack",
+    "href": "index.html#stack",
+    "title": "MSHA",
+    "section": "8 Stack",
+    "text": "8 Stack\nLanguage: Python\nLibraries:numpy, pandas, rasterio, matplotlib, skimage, sklearn"
+  }
+]
