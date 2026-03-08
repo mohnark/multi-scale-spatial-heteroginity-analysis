@@ -12,7 +12,7 @@ website:
         text: Home
     right:
       - icon: github
-        href: https://github.com/mohnark/multiscale-scene-structure-analysis
+        href: https://github.com/mohnark/multi-scale-spatial-heteroginity-analysis
 
 format:
   html:
