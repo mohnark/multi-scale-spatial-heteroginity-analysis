@@ -4,14 +4,14 @@
     "href": "index.html",
     "title": "MSHA",
     "section": "",
-    "text": "MSHA - Multi-Scale-Spatial-Heterogenity-Analysis is a programming-focused geospatial project that quantifies how homogeneous, complex, and spatially structured a remote-sensing scene is, without requiring land-cover labels or training data.\nThe project builds an unsupervised scene rating framework for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI.\nThe core idea is simple:\n\ntake a remote-sensing tile\ndivide it into windows\ncompute local texture and spatial statistics\naggregate them into scene-level scores\nrank scenes by homogeneity, complexity, and spatial organization"
+    "text": "MSHA - Multi-Scale-Spatial-Heterogenity-Analysis is a programming-focused geospatial project that quantifies how homogeneous, complex, and spatially structured a remote-sensing scene is, without requiring land-cover labels or training data.\nThe project builds an unsupervised scene rating framework for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI.\nThe Plan:\n\ntake a remote-sensing tile\ndivide it into windows\ncompute local texture and spatial statistics\naggregate them into scene-level scores\nrank scenes by homogeneity, complexity, and spatial organization"
   },
   {
     "objectID": "index.html#project-overview",
     "href": "index.html#project-overview",
     "title": "MSHA",
     "section": "",
-    "text": "MSHA - Multi-Scale-Spatial-Heterogenity-Analysis is a programming-focused geospatial project that quantifies how homogeneous, complex, and spatially structured a remote-sensing scene is, without requiring land-cover labels or training data.\nThe project builds an unsupervised scene rating framework for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI.\nThe core idea is simple:\n\ntake a remote-sensing tile\ndivide it into windows\ncompute local texture and spatial statistics\naggregate them into scene-level scores\nrank scenes by homogeneity, complexity, and spatial organization"
+    "text": "MSHA - Multi-Scale-Spatial-Heterogenity-Analysis is a programming-focused geospatial project that quantifies how homogeneous, complex, and spatially structured a remote-sensing scene is, without requiring land-cover labels or training data.\nThe project builds an unsupervised scene rating framework for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI.\nThe Plan:\n\ntake a remote-sensing tile\ndivide it into windows\ncompute local texture and spatial statistics\naggregate them into scene-level scores\nrank scenes by homogeneity, complexity, and spatial organization"
   },
   {
     "objectID": "index.html#question",
