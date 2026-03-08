@@ -1,0 +1,216 @@
+---
+title: "MSHA"
+subtitle: "Unsupervised Multi-Scale Scene Characterization for Remote Sensing Imagery"
+author: "Kumail Raza"
+date: today
+format:
+  html:
+    toc: true
+    number-sections: true
+---
+
+## Project overview
+
+**MSHA - Multi-Scale-Spatial-Heterogenity-Analysis** is a programming-focused geospatial project that quantifies how **homogeneous**, **complex**, and **spatially structured** a remote-sensing scene is, without requiring land-cover labels or training data.
+
+The project builds an **unsupervised scene rating framework** for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI.
+
+The Plan:
+
+- take a remote-sensing tile
+- divide it into windows
+- compute local texture and spatial statistics
+- aggregate them into scene-level scores
+- rank scenes by homogeneity, complexity, and spatial organization
+
+## Question
+
+Can remote-sensing scenes be automatically characterized and ranked using unsupervised multi-scale spatial metrics?
+
+## Study data
+
+### Data source
+
+The project uses **Sentinel-2 Level-2A imagery**.
+
+### Bands
+
+Only the following 10 m bands are required:
+
+- **B04**: Red
+- **B08**: NIR
+
+From these, NDVI is computed:
+
+$$
+NDVI = \frac{NIR - Red}{NIR + Red}
+$$
+
+### Scene selection
+
+A practical dataset consists of:
+
+- **4 to 6 scenes (Different Timestamps, Locations etc)**
+- each scene cropped to **512 × 512 pixels**
+- spatial resolution: **10 m**
+- analysis performed on NDVI only
+
+No land-type labels are required.
+
+## Analytical framework
+
+The analysis is performed at two levels:
+
+1. **Window level**: compute local metrics inside windows
+2. **Scene level**: aggregate window metrics into scene descriptors
+
+### Multi-scale windows
+
+The same image is evaluated at multiple window sizes:
+
+- **32 × 32**
+- **64 × 64**
+- **128 × 128**
+
+This allows the project to measure how scene structure changes with spatial support.
+
+## Core metrics
+
+The project uses five main metrics.
+
+### 1. Shannon entropy
+
+Measures information richness or disorder.
+
+$$
+H = - \sum_i p_i \log(p_i)
+$$
+
+Interpretation:
+
+- low entropy = uniform scene
+- high entropy = complex or irregular scene
+
+### 2. Local variance
+
+Measures variability inside each window.
+
+$$
+\sigma^2 = \frac{1}{N}\sum_i (x_i - \mu)^2
+$$
+
+Interpretation:
+
+- low variance = homogeneous patch
+- high variance = heterogeneous patch
+
+### 3. Edge density
+
+Computed from Sobel or Canny edges.
+
+$$
+ED = \frac{\text{number of edge pixels}}{\text{total number of pixels}}
+$$
+
+Interpretation:
+
+- low edge density = smooth scene
+- high edge density = many boundaries or fragmented structure
+
+### 4. GLCM homogeneity
+
+A texture smoothness metric derived from the gray-level co-occurrence matrix.
+
+Interpretation:
+
+- high value = smooth texture
+- low value = rough or heterogeneous texture
+
+### 5. Moran's I
+
+Measures spatial autocorrelation.
+
+$$
+I = \frac{N}{W}
+\frac{\sum_i \sum_j w_{ij}(x_i-\bar{x})(x_j-\bar{x})}
+{\sum_i (x_i-\bar{x})^2}
+$$
+
+Interpretation:
+
+- high positive values = clustered, spatially organized patterns
+- values near zero = random arrangement
+
+## Composite indices
+
+The raw metrics are standardized using z-scores:
+
+$$
+z = \frac{x - \mu}{\sigma}
+$$
+
+### Homogeneity Index (HI)
+
+A higher value indicates a more uniform scene.
+
+$$
+HI = z(\text{GLCM Homogeneity}) - z(\text{Entropy}) - z(\text{Variance}) - z(\text{Edge Density})
+$$
+
+### Complexity Index (CI)
+
+A higher value indicates a more textured and fragmented scene.
+
+$$
+CI = z(\text{Entropy}) + z(\text{Variance}) + z(\text{Edge Density})
+$$
+
+### Spatial Structure Index (SSI)
+
+A higher value indicates stronger spatial organization.
+
+$$
+SSI = z(\text{Moran's I}) + z(\text{GLCM Homogeneity})
+$$
+
+### Optional final score
+
+A single scene score can be defined as:
+
+$$
+SIS = 0.4 \cdot CI + 0.4 \cdot SSI - 0.2 \cdot HI
+$$
+
+where **SIS** is the **Scene Informativeness Score**.
+
+## Expected outputs
+
+### Output 1 — Scene ranking table
+
+A table like:
+
+| Scene | Mean Entropy | Mean Variance | Mean Edge Density | Mean Moran's I | HI | CI | SSI | SIS |
+|---|---:|---:|---:|---:|---:|---:|---:|---:|
+
+### Output 2 — Patch-level homogeneity maps
+
+Maps showing where homogeneous and heterogeneous regions occur within a scene.
+
+### Output 3 — Complexity maps
+
+Window-based maps of CI values.
+
+### Output 4 — PCA plot of scenes
+
+Dimensionality reduction on scene descriptors to compare scene similarity.
+
+### Output 5 — Multi-scale comparison plot
+
+A figure showing how scene metrics change across 32, 64, and 128 pixel windows.
+
+
+## Stack
+Language: Python
+
+
+Libraries:numpy, pandas, rasterio, matplotlib, skimage, sklearn

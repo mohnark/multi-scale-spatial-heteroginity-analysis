@@ -1,0 +1,30 @@
+project:
+  type: website
+  output-dir: docs
+  render:
+    - index.qmd
+
+website:
+  title: "Multi-Scale-Spatial-Heteroginity-Analysis"
+  navbar:
+    left:
+      - href: index.qmd
+        text: Home
+    right:
+      - icon: github
+        href: https://github.com/mohnark/multiscale-scene-structure-analysis
+
+format:
+  html:
+    theme: cosmo
+    toc: true
+    toc-depth: 3
+    code-fold: false
+    code-copy: true
+    css: styles.css
+
+execute:
+  echo: true
+  warning: false
+  message: false
+  freeze: auto
