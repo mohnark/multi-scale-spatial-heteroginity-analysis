@@ -182,8 +182,7 @@ window.Quarto = {
   <li><a href="#homogeneity-index-hi" id="toc-homogeneity-index-hi" class="nav-link" data-scroll-target="#homogeneity-index-hi"><span class="header-section-number">7.1</span> Homogeneity Index (HI)</a></li>
   <li><a href="#complexity-index-ci" id="toc-complexity-index-ci" class="nav-link" data-scroll-target="#complexity-index-ci"><span class="header-section-number">7.2</span> Complexity Index (CI)</a></li>
   <li><a href="#spatial-structure-index-ssi" id="toc-spatial-structure-index-ssi" class="nav-link" data-scroll-target="#spatial-structure-index-ssi"><span class="header-section-number">7.3</span> Spatial Structure Index (SSI)</a></li>
-  <li><a href="#optional-final-score" id="toc-optional-final-score" class="nav-link" data-scroll-target="#optional-final-score"><span class="header-section-number">7.4</span> Optional final score</a></li>
-  <li><a href="#embedding-based-heterogeneity-score" id="toc-embedding-based-heterogeneity-score" class="nav-link" data-scroll-target="#embedding-based-heterogeneity-score"><span class="header-section-number">7.5</span> Embedding-based heterogeneity score</a></li>
+  <li><a href="#embedding-based-heterogeneity-score" id="toc-embedding-based-heterogeneity-score" class="nav-link" data-scroll-target="#embedding-based-heterogeneity-score"><span class="header-section-number">7.4</span> Embedding-based heterogeneity score</a></li>
   </ul></li>
   <li><a href="#expected-outputs" id="toc-expected-outputs" class="nav-link" data-scroll-target="#expected-outputs"><span class="header-section-number">8</span> Expected outputs</a>
   <ul class="collapse">
@@ -438,16 +437,8 @@ CI = z(\text{Entropy}) + z(\text{Variance}) + z(\text{Edge Density})
 SSI = z(\text{Moran's I}) + z(\text{GLCM Homogeneity})
 \]</span></p>
 </section>
-<section id="optional-final-score" class="level3" data-number="7.4">
-<h3 data-number="7.4" class="anchored" data-anchor-id="optional-final-score"><span class="header-section-number">7.4</span> Optional final score</h3>
-<p>A single scene score can be defined as:</p>
-<p><span class="math display">\[
-SIS = 0.4 \cdot CI + 0.4 \cdot SSI - 0.2 \cdot HI
-\]</span></p>
-<p>where <strong>SIS</strong> is the <strong>Scene Informativeness Score</strong>.</p>
-</section>
-<section id="embedding-based-heterogeneity-score" class="level3" data-number="7.5">
-<h3 data-number="7.5" class="anchored" data-anchor-id="embedding-based-heterogeneity-score"><span class="header-section-number">7.5</span> Embedding-based heterogeneity score</h3>
+<section id="embedding-based-heterogeneity-score" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="embedding-based-heterogeneity-score"><span class="header-section-number">7.4</span> Embedding-based heterogeneity score</h3>
 <p>For a scene, the <strong>spread of patch embeddings</strong> within the scene is used as an embedding-derived heterogeneity score:</p>
 <p><span class="math display">\[
 EHS = \frac{1}{P} \sum_{p=1}^{P} \|\alpha_p - \bar{\alpha}\|_2
