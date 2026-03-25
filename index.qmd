@@ -218,16 +218,6 @@ $$
 SSI = z(\text{Moran's I}) + z(\text{GLCM Homogeneity})
 $$
 
-### Optional final score
-
-A single scene score can be defined as:
-
-$$
-SIS = 0.4 \cdot CI + 0.4 \cdot SSI - 0.2 \cdot HI
-$$
-
-where **SIS** is the **Scene Informativeness Score**.
-
 ### Embedding-based heterogeneity score
 
 For a scene, the **spread of patch embeddings** within the scene is used as an embedding-derived heterogeneity score:
