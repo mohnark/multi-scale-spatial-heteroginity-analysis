@@ -7,7 +7,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
 
 <meta name="author" content="Kumail Raza">
-<meta name="dcterms.date" content="2026-03-08">
+<meta name="dcterms.date" content="2026-03-25">
 
 <title>MSHA – Multi-Scale-Spatial-Heteroginity-Analysis</title>
 <style>
@@ -155,12 +155,12 @@ window.Quarto = {
   <li><a href="#study-data" id="toc-study-data" class="nav-link" data-scroll-target="#study-data"><span class="header-section-number">3</span> Study data</a>
   <ul class="collapse">
   <li><a href="#data-source" id="toc-data-source" class="nav-link" data-scroll-target="#data-source"><span class="header-section-number">3.1</span> Data source</a></li>
-  <li><a href="#bands" id="toc-bands" class="nav-link" data-scroll-target="#bands"><span class="header-section-number">3.2</span> Bands</a></li>
-  <li><a href="#scene-selection" id="toc-scene-selection" class="nav-link" data-scroll-target="#scene-selection"><span class="header-section-number">3.3</span> Scene selection</a></li>
   </ul></li>
   <li><a href="#analytical-framework" id="toc-analytical-framework" class="nav-link" data-scroll-target="#analytical-framework"><span class="header-section-number">4</span> Analytical framework</a>
   <ul class="collapse">
-  <li><a href="#multi-scale-windows" id="toc-multi-scale-windows" class="nav-link" data-scroll-target="#multi-scale-windows"><span class="header-section-number">4.1</span> Multi-scale windows</a></li>
+  <li><a href="#track-a-metric-based-msha" id="toc-track-a-metric-based-msha" class="nav-link" data-scroll-target="#track-a-metric-based-msha"><span class="header-section-number">4.1</span> Track A ; Metric-based (MSHA)</a></li>
+  <li><a href="#track-b-embedding-based-alpha" id="toc-track-b-embedding-based-alpha" class="nav-link" data-scroll-target="#track-b-embedding-based-alpha"><span class="header-section-number">4.2</span> Track B ; Embedding-based (Alpha)</a></li>
+  <li><a href="#multi-scale-windows" id="toc-multi-scale-windows" class="nav-link" data-scroll-target="#multi-scale-windows"><span class="header-section-number">4.3</span> Multi-scale windows</a></li>
   </ul></li>
   <li><a href="#core-metrics" id="toc-core-metrics" class="nav-link" data-scroll-target="#core-metrics"><span class="header-section-number">5</span> Core metrics</a>
   <ul class="collapse">
@@ -170,22 +170,32 @@ window.Quarto = {
   <li><a href="#glcm-homogeneity" id="toc-glcm-homogeneity" class="nav-link" data-scroll-target="#glcm-homogeneity"><span class="header-section-number">5.4</span> 4. GLCM homogeneity</a></li>
   <li><a href="#morans-i" id="toc-morans-i" class="nav-link" data-scroll-target="#morans-i"><span class="header-section-number">5.5</span> 5. Moran’s I</a></li>
   </ul></li>
-  <li><a href="#composite-indices" id="toc-composite-indices" class="nav-link" data-scroll-target="#composite-indices"><span class="header-section-number">6</span> Composite indices</a>
+  <li><a href="#alpha-embeddings" id="toc-alpha-embeddings" class="nav-link" data-scroll-target="#alpha-embeddings"><span class="header-section-number">6</span> Alpha embeddings</a>
   <ul class="collapse">
-  <li><a href="#homogeneity-index-hi" id="toc-homogeneity-index-hi" class="nav-link" data-scroll-target="#homogeneity-index-hi"><span class="header-section-number">6.1</span> Homogeneity Index (HI)</a></li>
-  <li><a href="#complexity-index-ci" id="toc-complexity-index-ci" class="nav-link" data-scroll-target="#complexity-index-ci"><span class="header-section-number">6.2</span> Complexity Index (CI)</a></li>
-  <li><a href="#spatial-structure-index-ssi" id="toc-spatial-structure-index-ssi" class="nav-link" data-scroll-target="#spatial-structure-index-ssi"><span class="header-section-number">6.3</span> Spatial Structure Index (SSI)</a></li>
-  <li><a href="#optional-final-score" id="toc-optional-final-score" class="nav-link" data-scroll-target="#optional-final-score"><span class="header-section-number">6.4</span> Optional final score</a></li>
+  <li><a href="#what-are-alpha-embeddings" id="toc-what-are-alpha-embeddings" class="nav-link" data-scroll-target="#what-are-alpha-embeddings"><span class="header-section-number">6.1</span> What are alpha embeddings?</a></li>
+  <li><a href="#why-compare-with-msha-metrics" id="toc-why-compare-with-msha-metrics" class="nav-link" data-scroll-target="#why-compare-with-msha-metrics"><span class="header-section-number">6.2</span> Why compare with MSHA metrics?</a></li>
+  <li><a href="#embedding-extraction" id="toc-embedding-extraction" class="nav-link" data-scroll-target="#embedding-extraction"><span class="header-section-number">6.3</span> Embedding extraction</a></li>
+  <li><a href="#change-detection-via-embedding-distance" id="toc-change-detection-via-embedding-distance" class="nav-link" data-scroll-target="#change-detection-via-embedding-distance"><span class="header-section-number">6.4</span> Change detection via embedding distance</a></li>
   </ul></li>
-  <li><a href="#expected-outputs" id="toc-expected-outputs" class="nav-link" data-scroll-target="#expected-outputs"><span class="header-section-number">7</span> Expected outputs</a>
+  <li><a href="#composite-indices" id="toc-composite-indices" class="nav-link" data-scroll-target="#composite-indices"><span class="header-section-number">7</span> Composite indices</a>
   <ul class="collapse">
-  <li><a href="#output-1-scene-ranking-table" id="toc-output-1-scene-ranking-table" class="nav-link" data-scroll-target="#output-1-scene-ranking-table"><span class="header-section-number">7.1</span> Output 1 — Scene ranking table</a></li>
-  <li><a href="#output-2-patch-level-homogeneity-maps" id="toc-output-2-patch-level-homogeneity-maps" class="nav-link" data-scroll-target="#output-2-patch-level-homogeneity-maps"><span class="header-section-number">7.2</span> Output 2 — Patch-level homogeneity maps</a></li>
-  <li><a href="#output-3-complexity-maps" id="toc-output-3-complexity-maps" class="nav-link" data-scroll-target="#output-3-complexity-maps"><span class="header-section-number">7.3</span> Output 3 — Complexity maps</a></li>
-  <li><a href="#output-4-pca-plot-of-scenes" id="toc-output-4-pca-plot-of-scenes" class="nav-link" data-scroll-target="#output-4-pca-plot-of-scenes"><span class="header-section-number">7.4</span> Output 4 — PCA plot of scenes</a></li>
-  <li><a href="#output-5-multi-scale-comparison-plot" id="toc-output-5-multi-scale-comparison-plot" class="nav-link" data-scroll-target="#output-5-multi-scale-comparison-plot"><span class="header-section-number">7.5</span> Output 5 — Multi-scale comparison plot</a></li>
+  <li><a href="#homogeneity-index-hi" id="toc-homogeneity-index-hi" class="nav-link" data-scroll-target="#homogeneity-index-hi"><span class="header-section-number">7.1</span> Homogeneity Index (HI)</a></li>
+  <li><a href="#complexity-index-ci" id="toc-complexity-index-ci" class="nav-link" data-scroll-target="#complexity-index-ci"><span class="header-section-number">7.2</span> Complexity Index (CI)</a></li>
+  <li><a href="#spatial-structure-index-ssi" id="toc-spatial-structure-index-ssi" class="nav-link" data-scroll-target="#spatial-structure-index-ssi"><span class="header-section-number">7.3</span> Spatial Structure Index (SSI)</a></li>
+  <li><a href="#optional-final-score" id="toc-optional-final-score" class="nav-link" data-scroll-target="#optional-final-score"><span class="header-section-number">7.4</span> Optional final score</a></li>
+  <li><a href="#embedding-based-heterogeneity-score" id="toc-embedding-based-heterogeneity-score" class="nav-link" data-scroll-target="#embedding-based-heterogeneity-score"><span class="header-section-number">7.5</span> Embedding-based heterogeneity score</a></li>
   </ul></li>
-  <li><a href="#stack" id="toc-stack" class="nav-link" data-scroll-target="#stack"><span class="header-section-number">8</span> Stack</a></li>
+  <li><a href="#expected-outputs" id="toc-expected-outputs" class="nav-link" data-scroll-target="#expected-outputs"><span class="header-section-number">8</span> Expected outputs</a>
+  <ul class="collapse">
+  <li><a href="#output-1-scene-ranking-table" id="toc-output-1-scene-ranking-table" class="nav-link" data-scroll-target="#output-1-scene-ranking-table"><span class="header-section-number">8.1</span> Output 1 ; Scene ranking table</a></li>
+  <li><a href="#output-2-patch-level-homogeneity-maps" id="toc-output-2-patch-level-homogeneity-maps" class="nav-link" data-scroll-target="#output-2-patch-level-homogeneity-maps"><span class="header-section-number">8.2</span> Output 2 ; Patch-level homogeneity maps</a></li>
+  <li><a href="#output-3-complexity-maps" id="toc-output-3-complexity-maps" class="nav-link" data-scroll-target="#output-3-complexity-maps"><span class="header-section-number">8.3</span> Output 3 ; Complexity maps</a></li>
+  <li><a href="#output-4-pca-umap-plot-of-scenes" id="toc-output-4-pca-umap-plot-of-scenes" class="nav-link" data-scroll-target="#output-4-pca-umap-plot-of-scenes"><span class="header-section-number">8.4</span> Output 4 ; PCA / UMAP plot of scenes</a></li>
+  <li><a href="#output-5-multi-scale-comparison-plot" id="toc-output-5-multi-scale-comparison-plot" class="nav-link" data-scroll-target="#output-5-multi-scale-comparison-plot"><span class="header-section-number">8.5</span> Output 5 ; Multi-scale comparison plot</a></li>
+  <li><a href="#output-6-change-detection-comparison-map" id="toc-output-6-change-detection-comparison-map" class="nav-link" data-scroll-target="#output-6-change-detection-comparison-map"><span class="header-section-number">8.6</span> Output 6 ; Change detection comparison map</a></li>
+  <li><a href="#output-7-metric-vs.-embedding-correlation-plot" id="toc-output-7-metric-vs.-embedding-correlation-plot" class="nav-link" data-scroll-target="#output-7-metric-vs.-embedding-correlation-plot"><span class="header-section-number">8.7</span> Output 7 ; Metric vs.&nbsp;embedding correlation plot</a></li>
+  </ul></li>
+  <li><a href="#stack" id="toc-stack" class="nav-link" data-scroll-target="#stack"><span class="header-section-number">9</span> Stack</a></li>
   </ul>
 </nav>
     </div>
@@ -195,7 +205,7 @@ window.Quarto = {
 <header id="title-block-header" class="quarto-title-block default">
 <div class="quarto-title">
 <h1 class="title">MSHA</h1>
-<p class="subtitle lead">Unsupervised Multi-Scale Scene Characterization for Remote Sensing Imagery</p>
+<p class="subtitle lead">Unsupervised Multi-Scale Scene Characterization and Change Detection in Remote Sensing Imagery, A Comparison with Alpha Embeddings</p>
 </div>
 
 
@@ -212,7 +222,7 @@ window.Quarto = {
     <div>
     <div class="quarto-title-meta-heading">Published</div>
     <div class="quarto-title-meta-contents">
-      <p class="date">March 8, 2026</p>
+      <p class="date">March 25, 2026</p>
     </div>
   </div>
   
@@ -226,67 +236,77 @@ window.Quarto = {
 
 <section id="project-overview" class="level2" data-number="1">
 <h2 data-number="1" class="anchored" data-anchor-id="project-overview"><span class="header-section-number">1</span> Project overview</h2>
-<p><strong>MSHA - Multi-Scale-Spatial-Heterogenity-Analysis</strong> is a programming-focused geospatial project that quantifies how <strong>homogeneous</strong>, <strong>complex</strong>, and <strong>spatially structured</strong> a remote-sensing scene is, without requiring land-cover labels or training data.</p>
-<p>The project builds an <strong>unsupervised scene rating framework</strong> for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI.</p>
+<div id="fig-alpha" class="quarto-float quarto-figure quarto-figure-center anchored" data-fig-align="center">
+<figure class="quarto-float quarto-float-fig figure">
+<div aria-describedby="fig-alpha-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+<img src="./AlphaEmbd.jpg" class="img-fluid quarto-figure quarto-figure-center figure-img" style="width:100.0%">
+</div>
+<figcaption class="quarto-float-caption-bottom quarto-float-caption quarto-float-fig" id="fig-alpha-caption-0ceaefa1-69ba-4598-a22c-09a6ac19f8ca">
+Figure&nbsp;1: Google Alpha Embeddings map rich geospatial structure — land cover, seasonal patterns, and spatial context — into a compact latent space through self-supervised pretraining on large-scale satellite imagery. Source: Google Research.
+</figcaption>
+</figure>
+</div>
+<p><strong>MSHA - Multi-Scale-Spatial-Heterogeneity-Analysis</strong> is a programming-focused geospatial project that quantifies how <strong>homogeneous</strong>, <strong>complex</strong>, and <strong>spatially structured</strong> a remote-sensing scene is, without requiring land-cover labels or training data.</p>
+<p>The project builds an <strong>unsupervised scene rating framework</strong> for Sentinel-2 image patches using multi-scale spatial metrics derived from NDVI. Crucially, it also investigates <strong>how scene heterogeneity and temporal change are captured differently</strong> by these hand-crafted spatial statistics versus by <strong>alpha embeddings</strong>, learned, data-driven latent representations extracted from a self-supervised encoder.</p>
 <p>The Plan:</p>
 <ul>
-<li>take a remote-sensing tile</li>
+<li>take a remote-sensing tile across <strong>multiple timestamps</strong></li>
 <li>divide it into windows</li>
 <li>compute local texture and spatial statistics</li>
 <li>aggregate them into scene-level scores</li>
 <li>rank scenes by homogeneity, complexity, and spatial organization</li>
+<li><strong>extract alpha embeddings</strong> for each scene and patch</li>
+<li><strong>compare how change and heterogeneity manifest</strong> in the metric space versus the embedding space</li>
 </ul>
 </section>
 <section id="question" class="level2" data-number="2">
 <h2 data-number="2" class="anchored" data-anchor-id="question"><span class="header-section-number">2</span> Question</h2>
-<p>Can remote-sensing scenes be automatically characterized and ranked using unsupervised multi-scale spatial metrics?</p>
+<p>Can remote-sensing scenes be automatically characterized and ranked using unsupervised multi-scale spatial metrics ; and does the structure of <strong>alpha embeddings</strong> agree with, complement, or contradict what those metrics reveal about heterogeneity and change over time?</p>
 </section>
 <section id="study-data" class="level2" data-number="3">
 <h2 data-number="3" class="anchored" data-anchor-id="study-data"><span class="header-section-number">3</span> Study data</h2>
 <section id="data-source" class="level3" data-number="3.1">
 <h3 data-number="3.1" class="anchored" data-anchor-id="data-source"><span class="header-section-number">3.1</span> Data source</h3>
-<p>The project uses <strong>Sentinel-2 Level-2A imagery</strong>.</p>
-</section>
-<section id="bands" class="level3" data-number="3.2">
-<h3 data-number="3.2" class="anchored" data-anchor-id="bands"><span class="header-section-number">3.2</span> Bands</h3>
-<p>Only the following 10 m bands are required:</p>
-<ul>
-<li><strong>B04</strong>: Red</li>
-<li><strong>B08</strong>: NIR</li>
-</ul>
-<p>From these, NDVI is computed:</p>
-<p><span class="math display">\[
-NDVI = \frac{NIR - Red}{NIR + Red}
-\]</span></p>
-</section>
-<section id="scene-selection" class="level3" data-number="3.3">
-<h3 data-number="3.3" class="anchored" data-anchor-id="scene-selection"><span class="header-section-number">3.3</span> Scene selection</h3>
+<p><strong>Sentinel-2 Level-2A imagery</strong>.</p>
+<p><strong>Google Alpha Embeddings</strong>.</p>
 <p>A practical dataset consists of:</p>
 <ul>
-<li><strong>4 to 6 scenes (Different Timestamps, Locations etc)</strong></li>
+<li><strong>4 to 6 scenes at the same or overlapping locations, across different timestamps</strong></li>
 <li>each scene cropped to <strong>512 × 512 pixels</strong></li>
 <li>spatial resolution: <strong>10 m</strong></li>
-<li>analysis performed on NDVI only</li>
+<li>metric analysis performed on NDVI; embedding extraction on the full or selected band stack</li>
 </ul>
+<p>Including multi-temporal acquisitions of the same location allows <strong>change to be measured</strong> both via metric drift and via embedding distance.</p>
 <p>No land-type labels are required.</p>
 </section>
 </section>
 <section id="analytical-framework" class="level2" data-number="4">
 <h2 data-number="4" class="anchored" data-anchor-id="analytical-framework"><span class="header-section-number">4</span> Analytical framework</h2>
-<p>The analysis is performed at two levels:</p>
+<p>The analysis is performed at two parallel tracks:</p>
+<section id="track-a-metric-based-msha" class="level3" data-number="4.1">
+<h3 data-number="4.1" class="anchored" data-anchor-id="track-a-metric-based-msha"><span class="header-section-number">4.1</span> Track A ; Metric-based (MSHA)</h3>
 <ol type="1">
 <li><strong>Window level</strong>: compute local metrics inside windows</li>
 <li><strong>Scene level</strong>: aggregate window metrics into scene descriptors</li>
 </ol>
-<section id="multi-scale-windows" class="level3" data-number="4.1">
-<h3 data-number="4.1" class="anchored" data-anchor-id="multi-scale-windows"><span class="header-section-number">4.1</span> Multi-scale windows</h3>
+</section>
+<section id="track-b-embedding-based-alpha" class="level3" data-number="4.2">
+<h3 data-number="4.2" class="anchored" data-anchor-id="track-b-embedding-based-alpha"><span class="header-section-number">4.2</span> Track B ; Embedding-based (Alpha)</h3>
+<ol type="1">
+<li><strong>Patch level</strong>: extract alpha embeddings for fixed-size patches using a pretrained self-supervised encoder</li>
+<li><strong>Scene level</strong>: aggregate patch embeddings (e.g.&nbsp;mean pooling) into a scene-level descriptor vector</li>
+</ol>
+<p>Both tracks operate without labels. The comparison focuses on which approach better separates scenes that differ in land-cover heterogeneity or have undergone temporal change.</p>
+</section>
+<section id="multi-scale-windows" class="level3" data-number="4.3">
+<h3 data-number="4.3" class="anchored" data-anchor-id="multi-scale-windows"><span class="header-section-number">4.3</span> Multi-scale windows</h3>
 <p>The same image is evaluated at multiple window sizes:</p>
 <ul>
 <li><strong>32 × 32</strong></li>
 <li><strong>64 × 64</strong></li>
 <li><strong>128 × 128</strong></li>
 </ul>
-<p>This allows the project to measure how scene structure changes with spatial support.</p>
+<p>This allows the project to measure how scene structure changes with spatial support. Alpha embeddings are extracted at a fixed patch size (typically <strong>64 × 64</strong> or <strong>128 × 128</strong>) matching the encoder’s expected input.</p>
 </section>
 </section>
 <section id="core-metrics" class="level2" data-number="5">
@@ -352,62 +372,113 @@ I = \frac{N}{W}
 </ul>
 </section>
 </section>
-<section id="composite-indices" class="level2" data-number="6">
-<h2 data-number="6" class="anchored" data-anchor-id="composite-indices"><span class="header-section-number">6</span> Composite indices</h2>
+<section id="alpha-embeddings" class="level2" data-number="6">
+<h2 data-number="6" class="anchored" data-anchor-id="alpha-embeddings"><span class="header-section-number">6</span> Alpha embeddings</h2>
+<section id="what-are-alpha-embeddings" class="level3" data-number="6.1">
+<h3 data-number="6.1" class="anchored" data-anchor-id="what-are-alpha-embeddings"><span class="header-section-number">6.1</span> What are alpha embeddings?</h3>
+<p>Alpha embeddings are <strong>dense vector representations of image patches</strong> produced by a self-supervised or foundation-model encoder trained on large remote-sensing datasets (e.g.&nbsp;SatMAE, Scale-MAE, or a ViT pretrained via masked autoencoders). The encoder maps each patch into a high-dimensional latent space <strong>without any label supervision</strong>.</p>
+<p>The key property is that patches with similar visual or spectral content are pulled close together in embedding space, while dissimilar patches are farther apart ; even without the model ever being told what land-cover type a patch belongs to.</p>
+</section>
+<section id="why-compare-with-msha-metrics" class="level3" data-number="6.2">
+<h3 data-number="6.2" class="anchored" data-anchor-id="why-compare-with-msha-metrics"><span class="header-section-number">6.2</span> Why compare with MSHA metrics?</h3>
+<p>MSHA metrics measure heterogeneity through <strong>explicit, interpretable statistics</strong> (entropy, texture, autocorrelation). Alpha embeddings capture heterogeneity implicitly through <strong>learned feature geometry</strong>. The two approaches may:</p>
+<ul>
+<li><strong>agree</strong> in high-change or clearly heterogeneous scenes ; validating both methods</li>
+<li><strong>diverge</strong> in ambiguous scenes ; revealing what each approach is sensitive to</li>
+<li>show complementary sensitivity ; motivating a <strong>fusion</strong> of metrics and embeddings</li>
+</ul>
+</section>
+<section id="embedding-extraction" class="level3" data-number="6.3">
+<h3 data-number="6.3" class="anchored" data-anchor-id="embedding-extraction"><span class="header-section-number">6.3</span> Embedding extraction</h3>
+<p>For each patch:</p>
+<ol type="1">
+<li>Resize or crop to the encoder’s expected input size</li>
+<li>Pass through the pretrained encoder</li>
+<li>Extract the <code>[CLS]</code> token or mean-pooled feature vector as the embedding <span class="math inline">\(\alpha \in \mathbb{R}^d\)</span></li>
+</ol>
+</section>
+<section id="change-detection-via-embedding-distance" class="level3" data-number="6.4">
+<h3 data-number="6.4" class="anchored" data-anchor-id="change-detection-via-embedding-distance"><span class="header-section-number">6.4</span> Change detection via embedding distance</h3>
+<p>For a scene observed at two timestamps <span class="math inline">\(t_1\)</span> and <span class="math inline">\(t_2\)</span>, the change signal for a patch can be estimated as:</p>
+<p><span class="math display">\[
+\Delta\alpha = \|\alpha_{t_2} - \alpha_{t_1}\|_2
+\]</span></p>
+<p>A high <span class="math inline">\(\Delta\alpha\)</span> indicates that the patch’s visual content has shifted significantly in the latent space ; a proxy for land-cover or structural change.</p>
+<p>This is compared directly against the <strong>metric-based change signal</strong>:</p>
+<p><span class="math display">\[
+\Delta M = \|M_{t_2} - M_{t_1}\|
+\]</span></p>
+<p>where <span class="math inline">\(M\)</span> is the vector of MSHA metrics (entropy, variance, edge density, etc.) for the same patch.</p>
+</section>
+</section>
+<section id="composite-indices" class="level2" data-number="7">
+<h2 data-number="7" class="anchored" data-anchor-id="composite-indices"><span class="header-section-number">7</span> Composite indices</h2>
 <p>The raw metrics are standardized using z-scores:</p>
 <p><span class="math display">\[
 z = \frac{x - \mu}{\sigma}
 \]</span></p>
-<section id="homogeneity-index-hi" class="level3" data-number="6.1">
-<h3 data-number="6.1" class="anchored" data-anchor-id="homogeneity-index-hi"><span class="header-section-number">6.1</span> Homogeneity Index (HI)</h3>
+<section id="homogeneity-index-hi" class="level3" data-number="7.1">
+<h3 data-number="7.1" class="anchored" data-anchor-id="homogeneity-index-hi"><span class="header-section-number">7.1</span> Homogeneity Index (HI)</h3>
 <p>A higher value indicates a more uniform scene.</p>
 <p><span class="math display">\[
 HI = z(\text{GLCM Homogeneity}) - z(\text{Entropy}) - z(\text{Variance}) - z(\text{Edge Density})
 \]</span></p>
 </section>
-<section id="complexity-index-ci" class="level3" data-number="6.2">
-<h3 data-number="6.2" class="anchored" data-anchor-id="complexity-index-ci"><span class="header-section-number">6.2</span> Complexity Index (CI)</h3>
+<section id="complexity-index-ci" class="level3" data-number="7.2">
+<h3 data-number="7.2" class="anchored" data-anchor-id="complexity-index-ci"><span class="header-section-number">7.2</span> Complexity Index (CI)</h3>
 <p>A higher value indicates a more textured and fragmented scene.</p>
 <p><span class="math display">\[
 CI = z(\text{Entropy}) + z(\text{Variance}) + z(\text{Edge Density})
 \]</span></p>
 </section>
-<section id="spatial-structure-index-ssi" class="level3" data-number="6.3">
-<h3 data-number="6.3" class="anchored" data-anchor-id="spatial-structure-index-ssi"><span class="header-section-number">6.3</span> Spatial Structure Index (SSI)</h3>
+<section id="spatial-structure-index-ssi" class="level3" data-number="7.3">
+<h3 data-number="7.3" class="anchored" data-anchor-id="spatial-structure-index-ssi"><span class="header-section-number">7.3</span> Spatial Structure Index (SSI)</h3>
 <p>A higher value indicates stronger spatial organization.</p>
 <p><span class="math display">\[
 SSI = z(\text{Moran's I}) + z(\text{GLCM Homogeneity})
 \]</span></p>
 </section>
-<section id="optional-final-score" class="level3" data-number="6.4">
-<h3 data-number="6.4" class="anchored" data-anchor-id="optional-final-score"><span class="header-section-number">6.4</span> Optional final score</h3>
+<section id="optional-final-score" class="level3" data-number="7.4">
+<h3 data-number="7.4" class="anchored" data-anchor-id="optional-final-score"><span class="header-section-number">7.4</span> Optional final score</h3>
 <p>A single scene score can be defined as:</p>
 <p><span class="math display">\[
 SIS = 0.4 \cdot CI + 0.4 \cdot SSI - 0.2 \cdot HI
 \]</span></p>
 <p>where <strong>SIS</strong> is the <strong>Scene Informativeness Score</strong>.</p>
 </section>
+<section id="embedding-based-heterogeneity-score" class="level3" data-number="7.5">
+<h3 data-number="7.5" class="anchored" data-anchor-id="embedding-based-heterogeneity-score"><span class="header-section-number">7.5</span> Embedding-based heterogeneity score</h3>
+<p>For a scene, the <strong>spread of patch embeddings</strong> within the scene is used as an embedding-derived heterogeneity score:</p>
+<p><span class="math display">\[
+EHS = \frac{1}{P} \sum_{p=1}^{P} \|\alpha_p - \bar{\alpha}\|_2
+\]</span></p>
+<p>where <span class="math inline">\(P\)</span> is the number of patches and <span class="math inline">\(\bar{\alpha}\)</span> is the mean scene embedding. A higher EHS indicates that patches within the scene occupy diverse regions of the latent space ; analogous to a high CI.</p>
 </section>
-<section id="expected-outputs" class="level2" data-number="7">
-<h2 data-number="7" class="anchored" data-anchor-id="expected-outputs"><span class="header-section-number">7</span> Expected outputs</h2>
-<section id="output-1-scene-ranking-table" class="level3" data-number="7.1">
-<h3 data-number="7.1" class="anchored" data-anchor-id="output-1-scene-ranking-table"><span class="header-section-number">7.1</span> Output 1 — Scene ranking table</h3>
-<p>A table like:</p>
-<table class="caption-top">
+</section>
+<section id="expected-outputs" class="level2" data-number="8">
+<h2 data-number="8" class="anchored" data-anchor-id="expected-outputs"><span class="header-section-number">8</span> Expected outputs</h2>
+<section id="output-1-scene-ranking-table" class="level3" data-number="8.1">
+<h3 data-number="8.1" class="anchored" data-anchor-id="output-1-scene-ranking-table"><span class="header-section-number">8.1</span> Output 1 ; Scene ranking table</h3>
+<p>A table comparing metric-based and embedding-based characterization side by side:</p>
+<table class="caption-top" style="width:100%;">
 <colgroup>
+<col style="width: 6%">
+<col style="width: 6%">
 <col style="width: 8%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
-<col style="width: 11%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
+<col style="width: 8%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Scene</th>
+<th>Timestamp</th>
 <th style="text-align: right;">Mean Entropy</th>
 <th style="text-align: right;">Mean Variance</th>
 <th style="text-align: right;">Mean Edge Density</th>
@@ -416,33 +487,46 @@ SIS = 0.4 \cdot CI + 0.4 \cdot SSI - 0.2 \cdot HI
 <th style="text-align: right;">CI</th>
 <th style="text-align: right;">SSI</th>
 <th style="text-align: right;">SIS</th>
+<th style="text-align: right;">EHS</th>
+<th style="text-align: right;"><span class="math inline">\(\Delta\alpha\)</span></th>
 </tr>
 </thead>
 <tbody>
 </tbody>
 </table>
 </section>
-<section id="output-2-patch-level-homogeneity-maps" class="level3" data-number="7.2">
-<h3 data-number="7.2" class="anchored" data-anchor-id="output-2-patch-level-homogeneity-maps"><span class="header-section-number">7.2</span> Output 2 — Patch-level homogeneity maps</h3>
-<p>Maps showing where homogeneous and heterogeneous regions occur within a scene.</p>
+<section id="output-2-patch-level-homogeneity-maps" class="level3" data-number="8.2">
+<h3 data-number="8.2" class="anchored" data-anchor-id="output-2-patch-level-homogeneity-maps"><span class="header-section-number">8.2</span> Output 2 ; Patch-level homogeneity maps</h3>
+<p>Maps showing where homogeneous and heterogeneous regions occur within a scene, derived from MSHA metrics.</p>
 </section>
-<section id="output-3-complexity-maps" class="level3" data-number="7.3">
-<h3 data-number="7.3" class="anchored" data-anchor-id="output-3-complexity-maps"><span class="header-section-number">7.3</span> Output 3 — Complexity maps</h3>
-<p>Window-based maps of CI values.</p>
+<section id="output-3-complexity-maps" class="level3" data-number="8.3">
+<h3 data-number="8.3" class="anchored" data-anchor-id="output-3-complexity-maps"><span class="header-section-number">8.3</span> Output 3 ; Complexity maps</h3>
+<p>Window-based maps of CI values, with embedding-distance overlay for comparison.</p>
 </section>
-<section id="output-4-pca-plot-of-scenes" class="level3" data-number="7.4">
-<h3 data-number="7.4" class="anchored" data-anchor-id="output-4-pca-plot-of-scenes"><span class="header-section-number">7.4</span> Output 4 — PCA plot of scenes</h3>
-<p>Dimensionality reduction on scene descriptors to compare scene similarity.</p>
+<section id="output-4-pca-umap-plot-of-scenes" class="level3" data-number="8.4">
+<h3 data-number="8.4" class="anchored" data-anchor-id="output-4-pca-umap-plot-of-scenes"><span class="header-section-number">8.4</span> Output 4 ; PCA / UMAP plot of scenes</h3>
+<p>Dimensionality reduction applied to both <strong>scene-level metric vectors</strong> and <strong>scene-level alpha embeddings</strong> in the same figure, to visualize whether the two representations cluster scenes similarly.</p>
 </section>
-<section id="output-5-multi-scale-comparison-plot" class="level3" data-number="7.5">
-<h3 data-number="7.5" class="anchored" data-anchor-id="output-5-multi-scale-comparison-plot"><span class="header-section-number">7.5</span> Output 5 — Multi-scale comparison plot</h3>
+<section id="output-5-multi-scale-comparison-plot" class="level3" data-number="8.5">
+<h3 data-number="8.5" class="anchored" data-anchor-id="output-5-multi-scale-comparison-plot"><span class="header-section-number">8.5</span> Output 5 ; Multi-scale comparison plot</h3>
 <p>A figure showing how scene metrics change across 32, 64, and 128 pixel windows.</p>
 </section>
+<section id="output-6-change-detection-comparison-map" class="level3" data-number="8.6">
+<h3 data-number="8.6" class="anchored" data-anchor-id="output-6-change-detection-comparison-map"><span class="header-section-number">8.6</span> Output 6 ; Change detection comparison map</h3>
+<p>Side-by-side spatial maps of <span class="math inline">\(\Delta M\)</span> (metric-based change) and <span class="math inline">\(\Delta\alpha\)</span> (embedding-based change) for multi-temporal scene pairs, highlighting areas of agreement and disagreement.</p>
 </section>
-<section id="stack" class="level2" data-number="8">
-<h2 data-number="8" class="anchored" data-anchor-id="stack"><span class="header-section-number">8</span> Stack</h2>
-<p>Language: Python</p>
-<p>Libraries:numpy, pandas, rasterio, matplotlib, skimage, sklearn</p>
+<section id="output-7-metric-vs.-embedding-correlation-plot" class="level3" data-number="8.7">
+<h3 data-number="8.7" class="anchored" data-anchor-id="output-7-metric-vs.-embedding-correlation-plot"><span class="header-section-number">8.7</span> Output 7 ; Metric vs.&nbsp;embedding correlation plot</h3>
+<p>Scatter plots of CI vs.&nbsp;EHS and <span class="math inline">\(\Delta M\)</span> vs.&nbsp;<span class="math inline">\(\Delta\alpha\)</span> across all patches and scenes, with Pearson/Spearman correlation reported. This directly quantifies how well the two paradigms agree in capturing heterogeneity and change.</p>
+</section>
+</section>
+<section id="stack" class="level2" data-number="9">
+<h2 data-number="9" class="anchored" data-anchor-id="stack"><span class="header-section-number">9</span> Stack</h2>
+<p><strong>Language:</strong> Python</p>
+<p><strong>Libraries:</strong> <code>numpy</code>, <code>pandas</code>, <code>rasterio</code>, <code>matplotlib</code>, <code>skimage</code>, <code>sklearn</code>, <code>torch</code>, <code>timm</code>, <code>umap-learn</code></p>
+<blockquote class="blockquote">
+<p><code>torch</code> and <code>timm</code> are required for loading pretrained encoders and extracting alpha embeddings. <code>umap-learn</code> is used for embedding-space visualization alongside PCA.</p>
+</blockquote>
 
 
 </section>
